@@ -34,16 +34,23 @@ const cardAppender = (selector) => {
 	//get the api and append created cards
 	const files = axios.get(`https://lambda-times-api.herokuapp.com/articles`);
 	const container = document.querySelector(selector);
-	files.then(function (e) {
-		let getArticles = [];
-		getArticles = e.data.articles;
-		Object.keys(getArticles).forEach((e) => {
-			let getFiles = getArticles[e];
-			getFiles.forEach((e) => {
-				container.appendChild(Card(e));
+	files
+		.then(function (e) {
+			let getArticles = [];
+			getArticles = e.data.articles;
+			Object.keys(getArticles).forEach((e) => {
+				let getFiles = getArticles[e];
+				getFiles.forEach((e) => {
+					container.appendChild(Card(e));
+				});
 			});
+		})
+		.catch(function () {
+			console.log("This wasn't supposed to happen");
+		})
+		.finally(function () {
+			console.log("All done");
 		});
-	});
 };
 
 export { Card, cardAppender };

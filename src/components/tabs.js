@@ -19,9 +19,16 @@ const tabsAppender = (selector) => {
 	const topics = axios.get("https://lambda-times-api.herokuapp.com/topics");
 	//find container and append created tabs
 	const tabs = document.querySelector(selector);
-	topics.then((file) => {
-		tabs.appendChild(Tabs(file.data.topics));
-	});
+	topics
+		.then((file) => {
+			tabs.appendChild(Tabs(file.data.topics));
+		})
+		.catch(function () {
+			console.log("This wasn't supposed to happen");
+		})
+		.finally(function () {
+			console.log("All done");
+		});
 };
 
 export { Tabs, tabsAppender };
